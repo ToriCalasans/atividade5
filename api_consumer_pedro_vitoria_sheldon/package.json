@@ -1,0 +1,26 @@
+{
+  "name": "api_consumer_pedro_vitoria_sheldon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --watch \"scrts/\" -e \"ts, json\" --exec \"ts-node index.ts\"",
+    "build": "tsc",
+    "prod": "npm run build && node outjs/index.js",
+    "star": "index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/readline-sync": "^1.4.4",
+    "axios": "^1.2.0",
+    "readline-sync": "^1.4.10"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.10",
+    "nodemon": "^2.0.20"
+  }
+}

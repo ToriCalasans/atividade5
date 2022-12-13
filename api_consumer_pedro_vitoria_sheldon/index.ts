@@ -6,7 +6,7 @@ const {
     listarFornecedores,
     listarProdutosComFornecedores,
     adicionarProduto,
-    listarEditarProdutos } = require('./src/lib/funcoes');
+    listarEditarProdutos } = require('./src/lib/funcoes.ts');
 
 
 

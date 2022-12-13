@@ -104,9 +104,10 @@ export async function listarEditarProdutos() {
             });
         if (opcao !== -1) { // -1 -> Sair
             console.clear();
-            await axios.get(`http://localhost:3000/produtos/${produtoId}`).then((result: { data: { _id: any; nome: any; qtdeEstoque: any; preco: any; _idFornFK: any; }; }) => {
+            const produto = axios.get(`http://localhost:3000/produtos/${produtoId}`).then((result: { data: { _id: any; nome: any; qtdeEstoque: any; preco: any; _idFornFK: any; }; }) => {
                 const opcoesDeMenu = ['Alterar', 'Excluir'];
-                produto = result.data;
+                const produto = 
+                //produto = result.data;
                 console.log('-----------------------------------');
                 console.log(' DETALHE DO PRODUTO');
                 console.log('-----------------------------------');
@@ -114,25 +115,27 @@ export async function listarEditarProdutos() {
                 console.log(`NOME: ${result.data.nome}`);
                 console.log(`QTDE: ${result.data.qtdeEstoque} PREÇO: ${result.data.preco} ID_FORN: ${result.data._idFornFK}`);
                 console.log('-----------------------------------');
-            });
+                return result.data
+            }); 
+            
             const opcao = parseInt(input.keyInSelect(opcoesMenu, 'Digite a opção: ', { cancel: 'Sair' }));
 
 
             switch (opcao) {
                 case 0: // Alterar
-                    produto!._id = 1;
+               
                     produto!.nome = input.question('NOME: ');
                     produto!.qtdeEstoque = parseInt(input.question('QTDE ESTOQUE: '));
                     produto!.preco = parseFloat(input.question('PREÇO: '));
                     produto!._idFornFK = parseInt(input.question('ID FORNECEDOR: '));
                     
-                    await axios.put(`http://localhost:3000/produtos/${produtoId}`).then((result: { data: { message: any; }; }) => console.log(result.data.message));
+                    await axios.put(`http://localhost:3000/produtos/${produto._id}`, produto).then((result: { data: { message: any; }; }) => console.log(result.data.message));
                     break;
                 case 1: // Excluir
                 
-                    const excluir = input.keyInYN(`Deseja excluir o produto "${produtoId} -${produto!.nome} " (y=sim / n=não)?`)
+                    const excluir = input.keyInYN(`Deseja excluir o produto "${produto._id} -${produto.nome} " (y=sim / n=não)?`)
                     if (excluir)
-                        await axios.delete(`http://localhost:3000/produtos/${produtoId}`).then((result: { data: { message: any; }; }) => console.log(result.data.message));
+                        await axios.delete(`http://localhost:3000/produtos/${produto._id}`).then((result: { data: { message: any; }; }) => console.log(result.data.message));
                     break;
                 case -1:
                     console.log('Operação de "Alteração/Exclusão" CANCELADA!');
